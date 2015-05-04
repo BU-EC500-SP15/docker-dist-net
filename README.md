@@ -45,7 +45,7 @@
     master_ip = "0.0.0.0"                           #Master-end IP address
     slave_id = 'slave_xxx'                          #Input slave id, must be the same as you will enter in ./master_add_slave.sh
                                                     #Must wrap slave_xxx with ''
-    download path = "~/Desktop/"                    #The file directory that you want to keep 
+    download_path = "~/Desktop/"                    #The file directory that you want to keep 
 </pre>
 <p> ·  Setting up Slave-end Environment:</p>
 <pre>
