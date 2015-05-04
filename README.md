@@ -42,9 +42,9 @@
 <h2>For Worker Node(a fresh copy of Ubuntu):</h2>
 <p> · Modify config.py:</p>
 <pre> 
-    master_ip = "172.16.46.154"                     #Master-end IP address
-    slave_id = 'slave_001'                          #Input slave id, must be the same as you will enter in ./master_add_slave.sh
-                                                    #Must wrap slave_00x with ''
+    master_ip = "0.0.0.0"                           #Master-end IP address
+    slave_id = 'slave_xxx'                          #Input slave id, must be the same as you will enter in ./master_add_slave.sh
+                                                    #Must wrap slave_xxx with ''
     download path = "~/Desktop/"                    #The file directory that you want to keep 
 </pre>
 <p> ·  Setting up Slave-end Environment:</p>
