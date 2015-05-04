@@ -1,31 +1,62 @@
-<h1>Network-aware Container Distribution System</h1>
+<h1>Network Aware Container Distribution System</h1>
 
-<h2>Project Outline</h2>
+<h2>Project Goal And Outline</h2>
 
-<p>“Network-aware Container Distribution System” is a project which aims at creating a solution to use idle networking resource of a datacenter to distribute data inside that datacenter (private cloud) . This project is mentored by Andrey Turkovsky.</p>
+<p>“Network Aware Container Distribution System” is a project which aims at 
+    creating a solution to use idle networking resource of a datacenter to 
+    distribute data inside that datacenter. The Goals of the Project are to
+    design and implement Network Monitoring, File Transmission Control, 
+    and Network Congestion Management.
+    This project is mentored by Andrey Turkovsky.</p>
 
-<p>The following points outline the key points of the project :</p>
-####Aim : 
+<h2>Usage</h2>
+<p>Please note that at this stage of development we can only distribute one file
+   at a time</p>
+<h3><h3>
 
-Create a solution to use idle networking resource of a datacenter to distribute data inside that datacenter without interfering current network traffic. 
+<h2>Environment Set Up<h2>
+<h3>For Master Node(a fresh copy of Ubuntu):</h3>
+<p>  · Modifing config.py:  </p> 
+<pre>
+    file_path = "/home/your_user_name/Desktop/"     #The absolute path of the file that will be distributed 
+    file_name = "test.jpg"                          #The name of the file that will be distributed 
+</pre>
+<p>  · Setting up Master-end Environment:</p> 
+<pre>
+    ./master_env_setup.sh
+</pre>
+<p> · To add slave node:  </p> 
+<pre>
+    ./master_add_slave.sh 
+</pre>
+<p> · Enter slave id</p> 
+<pre>
+    001                                              #the same id as configured on the slave machine
+</pre>
+<p> · Run master.py </p> 
+<pre>
+    python master.py
+</pre>
 
-####Functionality :  
-A tool to send a docker container from several machines to many machines and this needs to be done with the understanding that there should be no effect on the current network traffic(which means we need to monitor the network bandwidth being used for higher priority task in real time). 
 
-####Performance :  
-The goal is to have the highest performance with minimal effect on other stuff running on the network.
+<h2>For Worker Node(a fresh copy of Ubuntu):</h2>
+<p> · Modify config.py:</p>
+<pre> 
+    master_ip = "172.16.46.154"                     #Master-end IP address
+    slave_id = 'slave_001'                          #Input slave id, must be the same as you will enter in ./master_add_slave.sh
+                                                    #Must wrap slave_00x with ''
+    download path = "~/Desktop/"                    #The file directory that you want to keep 
+</pre>
+<p> ·  Setting up Slave-end Environment:</p>
+<pre>
+    ./slave_env_setup
+</pre>
+<p> ·  Run slave.py</p>
+<pre>
+    python slave.py
+</pre>
 
-####Scalability :  
-We expect the solution will have the scalability between 60,000 - 1,000,000 nodes.
-
-####Scope :  
-Be able to run a large cluster test and get performance with a number of different network loads.
-
-####Security Needs :  
-Since our project works within a private datacenter, the security is not a pressing issue.
-
-####Things to Explore :  
-We need to do some research on low-level network protocols, figure out how to send file between two nodes using docker(need to figure out how to use docker as well), then we gradually add nodes. The language we decided to use is Node.js so we need to get familiar with its APIs too. For the sake of the need to come up with a solution to monitor the network resource in real time and testing, we also need to figure out a way to simulate a busy network environment between nodes.
-
-####Users/Personas of the project :  
-“Network-aware Container Distribution System” , if successful, will be used as a part of Jisto.co’s private cloud solution. The project targets to deliver data inside datacenter with a “max network resource utilization” manner.  The users of the project will likely to be those companies who use Jisto’s solution to build private cloud on their idle computing resources.
+<p>As you finish above step, the file will starting to be distributed, if the network
+   condition is idle on worker node, the master will send file to this node, if the
+   network is not idle, the master will wait for the worker's network to become idle
+   then start to distribute file to worker</p>
